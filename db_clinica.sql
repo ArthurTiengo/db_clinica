@@ -147,3 +147,18 @@ WHERE especialidade='implantodontia'
 GROUP BY consulta.dataConsulta ASC 
 
 /*exercicio 16*/
+CREATE PROCEDURE ConsultasPorEspecialidade(IN especialidadeDesejada VARCHAR(100))
+SELECT dentista.nome, cro, dataConsulta, paciente.nome FROM consulta 
+INNER JOIN dentista ON consulta.codDentista=dentista.codDentista
+INNER JOIN paciente ON consulta.codPaciente=paciente.codPaciente
+WHERE especialidade=especialidadeDesejada ORDER BY dataConsulta ASC;
+ 
+CALL ConsultasPorEspecialidade('Geral')
+CALL ConsultasPorEspecialidade('Ortodontia')
+/*exercicio 17*/
+CREATE VIEW quantTipos AS
+SELECT COUNT(tipoConsulta) AS 'Quant. Tipos',tipoConsulta 
+FROM consulta 
+GROUP BY tipoConsulta;
+ 
+SELECT * FROM quantTipos;
